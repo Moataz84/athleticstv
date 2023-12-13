@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Dashboard</title>
+</head>
+<body>
+  <div class="container">
+    <%- include("partials/menu.ejs") %>
+    <div class="content posts-container">
+      <% if (posts.length) { %>
+        <h2>Posts</h2>
+        <div class="dashboard-posts">
+          <% for (post of posts) { %>
+            <div class="dashboard-post">
+              <img src="<%= post.photo %>?tr=w-50">
+              <a href="/posts/<%= post.postId %>" target="_blank">
+                <h3>Post: <%= post.postId %></h3>
+              </a>
+              <% if (post.expire) { %>
+                <p>Expiry: <%= new Date(post.createdAt).toLocaleString() %></p>
+              <% } else { %>
+                <p>Expiry: None</p>
+              <% } %>
+              <div class="post-actions">
+                <% if (!post.approved) { %>
+                  <button class="action" data-post-id="<%= post.postId %>" onclick="approvePost(event)">Approve</button>
+                <% } %>
+                <a class="action" href="/posts/<%= post.postId %>/edit" target="_blank">Edit</a>
+                <button class="action" data-post-id="<%= post.postId %>" onclick="confirmDelete(event)">Delete</button>
+              </div>
+            </div>
+          <% } %>
+        </div>
+      <% } else { %>
+        <h3 class="no-posts">No Posts Available</h3>
+      <% } %>
+    </div>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

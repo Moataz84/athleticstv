@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.snow.css">
+  <link rel="stylesheet" href="style.css">
+  <title>View</title>
+</head>
+<body>
+  <div class="container">
+    <div class="layout" data-color="<%= selected.color %>">
+      
+      <div class="photo-slider">
+        <div class="banner">
+          <img src="imgs/schools/<%= selected.id %>.jpg">
+          <div class="greeting"></div>
+        </div>
+
+        <div class="slider-container">
+          <div class="slider" data-posts="<%= posts %>">
+          </div>
+        </div>
+        <div class="caption-editor">
+          <div class="editor caption"></div>
+        </div>
+      </div>
+
+      <div class="side-pannel">
+        <div class="date-container">
+          <div class="date-bubble">
+            <p class="date"><span></span><span></span></p>
+            <p class="time"><span></span><span></span></p>
+          </div>
+        </div>
+
+        <div class="announcements-container">
+          <p class="slide-number"></p>
+          <div class="announcements-wrapper">
+            <div class="announcements" data-announcements="<%= announcements %>">
+            </div>
+          </div>
+        </div>
+
+        <div class="qr-codes-container">
+          <div class="qr-codes">
+            <div class="qr-code">
+              <h3>Guidance</h3>
+              <img src="/imgs/qr-codes/guidance.png">
+            </div>
+            <div class="qr-code">
+              <h3>Instagram</h3>
+              <img src="/imgs/qr-codes/instagram.png">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/home/slider.js"></script>
+  <script src="js/home/time.js"></script>
+  <script src="js/home/announcements.js"></script>
+  <script>
+    getPost()
+    document.querySelector(".ql-editor").contentEditable = false
+    const color = document.querySelector(".layout").getAttribute("data-color")
+    document.querySelector(":root").style.setProperty("--school-color", color)
+  </script>
+</body>
+</html>
