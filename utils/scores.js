@@ -29,6 +29,8 @@ function findClosest(value, array) {
 }
 
 async function getScores() {
+  const scores = []
+  const regex = /[\n\r]+|[\s]{2,}/g
   const date = await getDate()
   const formData = new FormData()
   formData.append("leagueid", "ALL")
@@ -55,12 +57,36 @@ async function getScores() {
     const tr = td[i].parentElement.previousElementSibling
     if (i % 2 === 0) {
       const rowIndex = allRows.indexOf(tr)
-      const sportName = allRows[findClosest(rowIndex, sportNameRowsIndex)].textContent
-      const scoreRow = tr.textContent
+      const sportName = allRows[findClosest(rowIndex, sportNameRowsIndex)].textContent.replace(regex, " ").trim()
+      const scoreRow = tr.children
+      
+      const school1 = scoreRow[0]
+      const school1Name = school1.textContent.replace(regex, " ").trim()
+      const school1Img = school1.children[0].children[0].src
+      const score1 = scoreRow[1].textContent.replace(regex, " ").trim()
 
-      console.log(scoreRow, sportName)
+      const school2 = scoreRow[3]
+      const school2Name = school2.textContent.replace(regex, " ").trim()
+      const school2Img = school2.children[0].children[0].src
+      const score2 = scoreRow[2].textContent.replace(regex, " ").trim()
+
+      scores.push({
+        sport: sportName, 
+        school1: {
+          name: school1Name,
+          img: school1Img,
+          score: score1
+        },
+        school2: {
+          name: school2Name,
+          img: school2Img,
+          score: score2
+        }
+      })
     }
   }
+  
+  return scores
 }
 
-getScores()
+module.exports = getScores

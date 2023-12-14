@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken")
 const fs = require("fs")
 const path = require("path")
 const Users = require("../Models/Users")
-const getAnnouncements = require("../utils/announcements")
 const { checkOrigin } = require("../utils/middleware")
 
 router.post("/login", checkOrigin, async (req, res) => {
@@ -36,22 +35,6 @@ router.post("/change-password", checkOrigin, async (req, res) => {
   if (!result) return res.send({msg: "The password you enetered is incorrect"})
   const password = await bcrypt.hash(req.body.newPassword, 10)
   await Users.findOneAndUpdate({_id: id}, {$set: {password}})
-  res.send({msg: "success"})
-})
-
-router.post("/announcements", checkOrigin, async (req, res) => {
-	const announcements = await getAnnouncements()
-  res.send({announcements})
-})
-
-router.post("/create-user", checkOrigin, async (req, res) => {
-  const { username, password } = req.body
-  const userCheck = await Users.findOne({username})
-  if (userCheck) {
-    return res.send({msg: "User already exists"})
-  }
-  const hashedPassword = await bcrypt.hash(password, 10)
-  await Users({username, password: hashedPassword}).save()
   res.send({msg: "success"})
 })
 
