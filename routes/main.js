@@ -3,6 +3,7 @@ const router = express.Router()
 const fs = require("fs")
 const path = require("path")
 const Posts = require("../Models/Posts")
+const getScores = require("../utils/scores")
 const { validateJWT, checkLoggedIn } = require("../utils/middleware")
 
 router.get("/", validateJWT, (req, res) => {
@@ -11,6 +12,11 @@ router.get("/", validateJWT, (req, res) => {
 
 router.get("/login", validateJWT, (req, res) => {
 	res.render("login", {loggedIn: checkLoggedIn(req)})
+})
+
+router.get("/view", validateJWT, async (req, res) => {
+  const scores = await getScores()
+  res.render("view", {scores})
 })
 
 module.exports = router

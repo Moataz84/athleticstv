@@ -1,0 +1,138 @@
+[
+  {
+    "name": "Varsity Boys Baseball",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Novice Boys Basketball",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Junior Girls Basketball",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Novice Girls Basketball",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Senior Girls Basketball",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Junior Boys Basketball (Tier)",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Senior Boys Basketball (Tier)",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Varsity Girls Field Hockey",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Junior Boys Football",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Senior Boys Football (Tier)",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Varsity Boys Hockey",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Varsity Girls Hockey",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Developmental Varsity Girls Hockey",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Varsity Boys Non Contact Hockey",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Varsity Boys Rugby",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Varsity Girls Rugby",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Varsity Girls Slo-Pitch",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Indoor Junior Boys Soccer",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Novice Boys Soccer",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Indoor Senior Boys Soccer",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Varsity Boys Soccer",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Novice Girls Soccer",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Varsity Girls Soccer",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Indoor Varsity Girls Soccer",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Grade 9 Novice Boys Touch Football",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Varsity Girls Touch Football",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Junior Boys Volleyball",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Senior Boys Volleyball",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Senior Girls Volleyball",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Junior Girls Volleyball (Tier)",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Junior Boys Water Polo",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Senior Boys Water Polo",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Junior Girls Water Polo",
+    "icon": "sport.png"
+  },
+  {
+    "name": "Senior Girls Water Polo",
+    "icon": "sport.png"
+  }
+]

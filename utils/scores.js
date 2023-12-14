@@ -1,5 +1,7 @@
 const axios = require("axios")
 const { JSDOM } = require("jsdom")
+const path = require("path")
+const fs = require("fs")
 
 async function getDate() {
   const dates = []
@@ -32,6 +34,7 @@ async function getScores() {
   const scores = []
   const regex = /[\n\r]+|[\s]{2,}/g
   const date = await getDate()
+  const sports = JSON.parse(fs.readFileSync(path.join(__dirname, "../sports.json"), "utf-8"))
 
   const formData = new FormData()
   formData.append("leagueid", "ALL")
@@ -59,6 +62,7 @@ async function getScores() {
     if (i % 2 === 0) {
       const rowIndex = allRows.indexOf(tr)
       const sportName = allRows[findClosest(rowIndex, sportNameRowsIndex)].textContent.replace(regex, " ").trim()
+      const sportIcon = sports.find(sport => sport.name === sportName).icon
       const scoreRow = tr.children
       
       const school1 = scoreRow[0]
@@ -72,7 +76,8 @@ async function getScores() {
       const score2 = scoreRow[2].textContent.replace(regex, " ").trim()
 
       scores.push({
-        sport: sportName, 
+        sportName,
+        sportIcon,
         school1: {
           name: school1Name,
           img: school1Img,
@@ -89,5 +94,4 @@ async function getScores() {
   
   return scores
 }
-
 module.exports = getScores
