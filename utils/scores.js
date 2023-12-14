@@ -1,0 +1,66 @@
+const axios = require("axios")
+const { JSDOM } = require("jsdom")
+
+async function getDate() {
+  const dates = []
+  const res = await axios("https://www.highschoolsportszone.ca/hwdsb/viewScores.php")
+  
+  new JSDOM(res.data).window.document.querySelectorAll("#dateSelect option").forEach((element, index) => {
+    if (index === 0) return
+    const date = element.getAttribute("value")
+    const offset = new Date().getTimezoneOffset() * 60000
+    dates.push(new Date(new Date(date).getTime() + offset).getTime())
+  })
+  
+  const d  = new Date()
+  d.setHours(0, 0, 0, 0)
+  d.toLocaleDateString("en-CA")
+  const yesterday = dates.filter(date => d.getTime() > date).splice(-1)[0]
+  const date = new Date(yesterday).toLocaleDateString("en-CA")
+  return date
+}
+
+function findClosest(value, array) {
+  let number = 0
+  array.forEach(v => {
+    if (value > v) number = v
+  })
+  return number
+}
+
+async function getScores() {
+  const date = await getDate()
+  const formData = new FormData()
+  formData.append("leagueid", "ALL")
+  formData.append("dateSelect", date)
+  formData.append("schoolSelect", "6")
+  formData.append("leagueSelect", "ALL")
+
+  const { data } = await axios({
+    method: "POST",
+    url: "https://www.highschoolsportszone.ca/hwdsb/viewScores.php",
+    data: formData,
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  })
+ 
+  const document = new JSDOM(data).window.document
+  const allRows = [...document.querySelectorAll("table tr")]
+  const sportNameRows = [...document.querySelectorAll(`th[colspan="4"]`)]
+  const sportNameRowsIndex = sportNameRows.map(th => allRows.indexOf(th.parentElement))
+  
+  const td = [...document.querySelectorAll(`td[colspan="4"]`)]
+  for (let i = 0; i < td.length; i++) {
+    const tr = td[i].parentElement.previousElementSibling
+    if (i % 2 === 0) {
+      const rowIndex = allRows.indexOf(tr)
+      const sportName = allRows[findClosest(rowIndex, sportNameRowsIndex)].textContent
+      const scoreRow = tr.textContent
+
+      console.log(scoreRow, sportName)
+    }
+  }
+}
+
+getScores()
