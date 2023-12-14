@@ -12,7 +12,7 @@ async function getDate() {
     dates.push(new Date(new Date(date).getTime() + offset).getTime())
   })
   
-  const d  = new Date()
+  const d = new Date()
   d.setHours(0, 0, 0, 0)
   d.toLocaleDateString("en-CA")
   const yesterday = dates.filter(date => d.getTime() > date).splice(-1)[0]
@@ -32,6 +32,7 @@ async function getScores() {
   const scores = []
   const regex = /[\n\r]+|[\s]{2,}/g
   const date = await getDate()
+
   const formData = new FormData()
   formData.append("leagueid", "ALL")
   formData.append("dateSelect", date)
@@ -62,12 +63,12 @@ async function getScores() {
       
       const school1 = scoreRow[0]
       const school1Name = school1.textContent.replace(regex, " ").trim()
-      const school1Img = school1.children[0].children[0].src
+      const school1Img = `https://www.highschoolsportszone.ca/hwdsb/${school1.children[0].children[0].src}`
       const score1 = scoreRow[1].textContent.replace(regex, " ").trim()
 
       const school2 = scoreRow[3]
       const school2Name = school2.textContent.replace(regex, " ").trim()
-      const school2Img = school2.children[0].children[0].src
+      const school2Img = `https://www.highschoolsportszone.ca/hwdsb/${school2.children[0].children[0].src}`
       const score2 = scoreRow[2].textContent.replace(regex, " ").trim()
 
       scores.push({
