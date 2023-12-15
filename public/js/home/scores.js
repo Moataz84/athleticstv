@@ -1,26 +1,38 @@
-const scoresSlider = document.querySelector(".scores")
-let scores = JSON.parse(scoresSlider.getAttribute("data-scores"))
-scoresSlider.removeAttribute("data-scores")
+const scoresContainer = document.querySelector(".scores")
+let scores = JSON.parse(scoresContainer.getAttribute("data-scores"))
+scoresContainer.removeAttribute("data-scores")
 
-scoresSlider.innerHTML = `
-<div class="score-card">
-  <div class="sport-info">
-    <img src="imgs/${scores[0].sportIcon}">
-    <h2>${scores[0].date}</h2>
-    <p>${scores[0].sportName}</p>
-  </div>
+function generateScoreCard(score, total, index) {
+  let spans = ""
+  for (let i = 0; i < total; i++) {
+    if (i === index) {
+      spans += `<span class="current"></span>`
+    } else {
+      spans += "<span></span>"
+    }
+  }
 
-  <div class="school-info">
-    <img src="${scores[0].school1.img}">
-    <p>${scores[0].school1.score}</p>
-    <p>${scores[0].school1.name}</p>
-  </div>
+  return `<div class="score-card">
+    <div class="sport-info">
+      <img src="imgs/${score.sportIcon}">
+      <h3>${score.date}</h3>
+      <p>${score.sportName}</p>
+    </div>
+  
+    <div class="school-info">
+      <img src="${score.school1.img}">
+      <p>${score.school1.score}</p>
+      <h2>${score.school1.name}</h2>
+    </div>
+  
+    <div class="school-info">
+      <img src="${score.school2.img}">
+      <p>${score.school2.score}</p>
+      <h2>${score.school2.name}</h2>
+    </div>
+  
+    <div class="card-list">${spans}</div>
+  </div>`
+}
 
-  <div class="school-info">
-    <img src="${scores[0].school2.img}">
-    <p>${scores[0].school2.score}</p>
-    <p>${scores[0].school2.name}</p>
-  </div>
-<div></div>
-</div>
-`
+scoresContainer.innerHTML = generateScoreCard(scores[0], scores.length, 0)
