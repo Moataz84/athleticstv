@@ -1,5 +1,6 @@
 const axios = require("axios")
 const { JSDOM } = require("jsdom")
+const { URL } = require("url")
 const path = require("path")
 const fs = require("fs")
 
@@ -33,7 +34,8 @@ function findClosest(value, array) {
 async function getScores() {
   const scores = []
   const regex = /[\n\r]+|[\s]{2,}/g
-  const date = await getDate()
+  const url = "https://www.highschoolsportszone.ca/hwdsb/"
+  const date =  await getDate()
   const sports = JSON.parse(fs.readFileSync(path.join(__dirname, "../sports.json"), "utf-8"))
 
   const formData = new FormData()
@@ -56,42 +58,46 @@ async function getScores() {
   const sportNameRows = [...document.querySelectorAll(`th[colspan="4"]`)]
   const sportNameRowsIndex = sportNameRows.map(th => allRows.indexOf(th.parentElement))
   
-  const td = [...document.querySelectorAll(`td[colspan="4"]`)]
-  for (let i = 0; i < td.length; i++) {
-    const tr = td[i].parentElement.previousElementSibling
-    if (i % 2 === 0) {
-      const rowIndex = allRows.indexOf(tr)
-      const sportName = allRows[findClosest(rowIndex, sportNameRowsIndex)].textContent.replace(regex, " ").trim()
-      const sportIcon = sports.find(sport => sport.name === sportName).icon
-      const scoreRow = tr.children
+  const tds = [...document.querySelectorAll(`td[colspan="4"]`)]
+  tds.forEach((td, i) => {
+    if (i % 2 !== 0) return
+    const tr = td.parentElement.previousElementSibling
+
+    const rowIndex = allRows.indexOf(tr)
+    const sportNameRow = allRows[findClosest(rowIndex, sportNameRowsIndex)]
+    const sportId = new URL(`${url}${sportNameRow.children[0].children[0].href}`).searchParams.get("leagueid")
+    const sportName = sportNameRow.textContent.replace(regex, " ").trim()
+    const sportIcon = sports.find(sport => sport.id === sportId).icon
+    const scoreRow = tr.children
       
-      const school1 = scoreRow[0]
-      const school1Name = school1.textContent.replace(regex, " ").trim()
-      const school1Img = `https://www.highschoolsportszone.ca/hwdsb/${school1.children[0].children[0].src}`
-      const score1 = scoreRow[1].textContent.replace(regex, " ").trim()
+    const school1 = scoreRow[0]
+    const school1Name = school1.textContent.replace(regex, " ").trim()
+    const school1Img = `${url}${school1.children[0].children[0].src}`
+    const score1 = scoreRow[1].textContent.replace(regex, " ").trim()
 
-      const school2 = scoreRow[3]
-      const school2Name = school2.textContent.replace(regex, " ").trim()
-      const school2Img = `https://www.highschoolsportszone.ca/hwdsb/${school2.children[0].children[0].src}`
-      const score2 = scoreRow[2].textContent.replace(regex, " ").trim()
+    const school2 = scoreRow[3]
+    if (!school2) return
+    const school2Name = school2.textContent.replace(regex, " ").trim()
+    const school2Img = `${url}${school2.children[0].children[0].src}`
+    const score2 = scoreRow[2].textContent.replace(regex, " ").trim()
 
-      scores.push({
-        sportName,
-        sportIcon,
-        school1: {
-          name: school1Name,
-          img: school1Img,
-          score: score1
-        },
-        school2: {
-          name: school2Name,
-          img: school2Img,
-          score: score2
-        }
-      })
-    }
-  }
+    scores.push({
+      sportName,
+      sportIcon,
+      school1: {
+        name: school1Name,
+        img: school1Img,
+        score: score1
+      },
+      school2: {
+        name: school2Name,
+        img: school2Img,
+        score: score2
+      }
+    })
+  })
   
   return scores
 }
+
 module.exports = getScores

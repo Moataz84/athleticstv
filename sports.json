@@ -1,138 +1,87 @@
 [
   {
-    "name": "Varsity Boys Baseball",
-    "icon": "sport.png"
-  },
-  {
-    "name": "Novice Boys Basketball",
-    "icon": "sport.png"
-  },
-  {
+    "id": "9",
     "name": "Junior Girls Basketball",
     "icon": "sport.png"
   },
   {
-    "name": "Novice Girls Basketball",
-    "icon": "sport.png"
-  },
-  {
+    "id": "10",
     "name": "Senior Girls Basketball",
     "icon": "sport.png"
   },
   {
+    "id": "22",
     "name": "Junior Boys Basketball (Tier)",
     "icon": "sport.png"
   },
   {
+    "id": "23",
     "name": "Senior Boys Basketball (Tier)",
     "icon": "sport.png"
   },
   {
-    "name": "Varsity Girls Field Hockey",
-    "icon": "sport.png"
-  },
-  {
+    "id": "5",
     "name": "Junior Boys Football",
     "icon": "sport.png"
   },
   {
+    "id": "8",
     "name": "Senior Boys Football (Tier)",
     "icon": "sport.png"
   },
   {
-    "name": "Varsity Boys Hockey",
-    "icon": "sport.png"
-  },
-  {
-    "name": "Varsity Girls Hockey",
-    "icon": "sport.png"
-  },
-  {
-    "name": "Developmental Varsity Girls Hockey",
-    "icon": "sport.png"
-  },
-  {
+    "id": "34",
     "name": "Varsity Boys Non Contact Hockey",
     "icon": "sport.png"
   },
   {
-    "name": "Varsity Boys Rugby",
-    "icon": "sport.png"
-  },
-  {
-    "name": "Varsity Girls Rugby",
-    "icon": "sport.png"
-  },
-  {
+    "id": "35",
     "name": "Varsity Girls Slo-Pitch",
     "icon": "sport.png"
   },
   {
-    "name": "Indoor Junior Boys Soccer",
-    "icon": "sport.png"
-  },
-  {
+    "id": "38",
     "name": "Novice Boys Soccer",
     "icon": "sport.png"
   },
   {
+    "id": "21",
     "name": "Indoor Senior Boys Soccer",
     "icon": "sport.png"
   },
   {
+    "id": "7",
     "name": "Varsity Boys Soccer",
     "icon": "sport.png"
   },
   {
-    "name": "Novice Girls Soccer",
-    "icon": "sport.png"
-  },
-  {
+    "id": "6",
     "name": "Varsity Girls Soccer",
     "icon": "sport.png"
   },
   {
-    "name": "Indoor Varsity Girls Soccer",
-    "icon": "sport.png"
-  },
-  {
-    "name": "Grade 9 Novice Boys Touch Football",
-    "icon": "sport.png"
-  },
-  {
+    "id": "36",
     "name": "Varsity Girls Touch Football",
     "icon": "sport.png"
   },
   {
+    "id": "13",
     "name": "Junior Boys Volleyball",
     "icon": "sport.png"
   },
   {
+    "id": "14",
     "name": "Senior Boys Volleyball",
     "icon": "sport.png"
   },
   {
+    "id": "16",
     "name": "Senior Girls Volleyball",
     "icon": "sport.png"
   },
   {
+    "id": "15",
     "name": "Junior Girls Volleyball (Tier)",
-    "icon": "sport.png"
-  },
-  {
-    "name": "Junior Boys Water Polo",
-    "icon": "sport.png"
-  },
-  {
-    "name": "Senior Boys Water Polo",
-    "icon": "sport.png"
-  },
-  {
-    "name": "Junior Girls Water Polo",
-    "icon": "sport.png"
-  },
-  {
-    "name": "Senior Girls Water Polo",
     "icon": "sport.png"
   }
 ]
