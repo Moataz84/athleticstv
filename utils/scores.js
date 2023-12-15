@@ -4,10 +4,26 @@ const { URL } = require("url")
 const path = require("path")
 const fs = require("fs")
 
+const url = "https://www.highschoolsportszone.ca/hwdsb/"
+
 async function getDate() {
   const dates = []
-  const res = await axios("https://www.highschoolsportszone.ca/hwdsb/viewScores.php")
-  
+
+  const formData = new FormData()
+  formData.append("leagueid", "ALL")
+  formData.append("dateSelect", "ALL")
+  formData.append("schoolSelect", "6")
+  formData.append("leagueSelect", "ALL")
+
+  const res = await axios({
+    method: "POST",
+    url: `${url}viewScores.php`,
+    data: formData,
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  })
+
   new JSDOM(res.data).window.document.querySelectorAll("#dateSelect option").forEach((element, index) => {
     if (index === 0) return
     const date = element.getAttribute("value")
@@ -34,7 +50,6 @@ function findClosest(value, array) {
 async function getScores() {
   const scores = []
   const regex = /[\n\r]+|[\s]{2,}/g
-  const url = "https://www.highschoolsportszone.ca/hwdsb/"
   const date =  await getDate()
   const sports = JSON.parse(fs.readFileSync(path.join(__dirname, "../sports.json"), "utf-8"))
 
@@ -46,7 +61,7 @@ async function getScores() {
 
   const { data } = await axios({
     method: "POST",
-    url: "https://www.highschoolsportszone.ca/hwdsb/viewScores.php",
+    url: `${url}viewScores.php`,
     data: formData,
     headers: {
       "Content-Type": "multipart/form-data"
@@ -84,6 +99,7 @@ async function getScores() {
     scores.push({
       sportName,
       sportIcon,
+      date: new Date(date).toLocaleDateString("en-CA", {day: "numeric", month: "long", year: "numeric"}),
       school1: {
         name: school1Name,
         img: school1Img,
@@ -96,7 +112,7 @@ async function getScores() {
       }
     })
   })
-  
+
   return scores
 }
 
