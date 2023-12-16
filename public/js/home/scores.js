@@ -20,13 +20,13 @@ function generateScoreCard(score, total, index) {
     </div>
   
     <div class="school-info">
-      <img src="${score.school1.img}">
+      <img src="imgs/${score.school1.img}">
       <p>${score.school1.score}</p>
       <h2>${score.school1.name}</h2>
     </div>
   
     <div class="school-info">
-      <img src="${score.school2.img}">
+      <img src="imgs/${score.school2.img}">
       <p>${score.school2.score}</p>
       <h2>${score.school2.name}</h2>
     </div>

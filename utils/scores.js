@@ -82,18 +82,19 @@ async function getScores() {
     const sportNameRow = allRows[findClosest(rowIndex, sportNameRowsIndex)]
     const sportId = new URL(`${url}${sportNameRow.children[0].children[0].href}`).searchParams.get("leagueid")
     const sportName = sportNameRow.textContent.replace(regex, " ").trim()
-    const sportIcon = sports.find(sport => sport.id === sportId).icon
+    const sportIcon = `sports/${sports.find(sport => sport.id === sportId).icon}`
     const scoreRow = tr.children
       
     const school1 = scoreRow[0]
     const school1Name = school1.textContent.replace(regex, " ").trim()
-    const school1Img = `${url}${school1.children[0].children[0].src}`
+    const school1Img = `schools/${school1.children[0].children[0].src.replace("images/logos/", "")}`
     const score1 = scoreRow[1].textContent.replace(regex, " ").trim()
 
     const school2 = scoreRow[3]
     if (!school2) return
     const school2Name = school2.textContent.replace(regex, " ").trim()
-    const school2Img = `${url}${school2.children[0].children[0].src}`
+    const school2Img = `schools/${school2.children[0].children[0].src.replace("images/logos/", "")}`
+    console.log(school2Img)
     const score2 = scoreRow[2].textContent.replace(regex, " ").trim()
 
     scores.push({
