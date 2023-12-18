@@ -3,16 +3,7 @@ let scores = JSON.parse(scoresContainer.getAttribute("data-scores"))
 scoresContainer.removeAttribute("data-scores")
 
 function generateScoreCard(score, total, index) {
-  let spans = ""
-  for (let i = 0; i < total; i++) {
-    if (i === index) {
-      spans += `<span class="current"></span>`
-    } else {
-      spans += "<span></span>"
-    }
-  }
-
-  return `<div class="score-card">
+  return `<div class="score-card" data-index="${index}">
     <div class="sport-info">
       <img src="imgs/${score.sportIcon}">
       <h3>${score.date}</h3>
@@ -30,9 +21,32 @@ function generateScoreCard(score, total, index) {
       <p>${score.school2.score}</p>
       <h2>${score.school2.name}</h2>
     </div>
-  
-    <div class="card-list">${spans}</div>
   </div>`
 }
 
 scoresContainer.innerHTML = generateScoreCard(scores[0], scores.length, 0)
+if (scores[1]) {
+  scoresContainer.insertAdjacentHTML(
+    "beforeend",
+    generateScoreCard(scores[1], scores.length, 1)
+  )
+} else {
+  scoresContainer.insertAdjacentHTML(
+    "beforeend",
+    generateScoreCard(scores[0], scores.length, 0)
+  )
+}
+
+setInterval(() => {
+  const current = parseInt(scoresContainer.children[1].getAttribute("data-index"))
+  let next = current + 1
+  if (!scores[next]) next = 0
+
+  scoresContainer.style.animation = "move 1.5s ease-in-out forwards"
+  const timeout = setTimeout(() => {
+    scoresContainer.style.animation = ""
+    scoresContainer.children[0].remove()
+    scoresContainer.insertAdjacentHTML("beforeend", generateScoreCard(scores[next], scores.length, next))
+    clearTimeout(timeout)
+  }, 1500)
+}, 3000)

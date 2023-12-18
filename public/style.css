@@ -62,15 +62,23 @@ nav a:last-of-type {
   background-color: #808080;
 }
 
-.scores {
+.scores-container {
   grid-column: 1 / 3;
-  padding: 0 15px 15px;
+  overflow: hidden;
+  padding: 0 15px;
+}
+
+.scores {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: relative;
 }
 
 .score-card {
   display: grid;
-  grid-template-columns: auto auto auto 1fr;
-  gap: 30px;
+  grid-template-columns: auto auto auto;
+  justify-content: space-evenly;
 }
 
 .sport-info, .school-info {
@@ -82,15 +90,18 @@ nav a:last-of-type {
 
 .sport-info h3, .school-info p {
   align-self: end;
+  text-align: center;
 }
 
 .sport-info p, .school-info h2 {
   align-self: start;
+  text-align: center;
 }
 
 .sport-info img, .school-info img {
-  height: 8vh;
+  height: 8.35vh;
   grid-row: 1 / 3;
+  aspect-ratio: 1 / 1;
 }
 
 .school-info p, .school-info h2 {
@@ -104,7 +115,7 @@ nav a:last-of-type {
 .card-list {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   gap: 5px;
 }
 
@@ -112,16 +123,16 @@ nav a:last-of-type {
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  border: 1px solid #000;
+  border: 1px solid #808080;
 }
 
 .card-list span.current {
-  background-color: #000;
+  background-color: #808080;
 }
 
 @keyframes move {
-  0% { right: 0%; }
-  100% { right: 100%; }
+  0% { top: 0; }
+  100% { top: calc(-10vh); }
 }
 
 /* Login */

@@ -94,7 +94,6 @@ async function getScores() {
     if (!school2) return
     const school2Name = school2.textContent.replace(regex, " ").trim()
     const school2Img = `schools/${school2.children[0].children[0].src.replace("images/logos/", "")}`
-    console.log(school2Img)
     const score2 = scoreRow[2].textContent.replace(regex, " ").trim()
 
     scores.push({
