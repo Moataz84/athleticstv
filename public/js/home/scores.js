@@ -2,7 +2,7 @@ const scoresContainer = document.querySelector(".scores")
 let scores = JSON.parse(scoresContainer.getAttribute("data-scores"))
 scoresContainer.removeAttribute("data-scores")
 
-function generateScoreCard(score, total, index) {
+function generateScoreCard(score, index) {
   return `<div class="score-card" data-index="${index}">
     <div class="sport-info">
       <img src="imgs/${score.sportIcon}">
@@ -24,17 +24,11 @@ function generateScoreCard(score, total, index) {
   </div>`
 }
 
-scoresContainer.innerHTML = generateScoreCard(scores[0], scores.length, 0)
+scoresContainer.innerHTML = generateScoreCard(scores[0], 0)
 if (scores[1]) {
-  scoresContainer.insertAdjacentHTML(
-    "beforeend",
-    generateScoreCard(scores[1], scores.length, 1)
-  )
+  scoresContainer.insertAdjacentHTML("beforeend", generateScoreCard(scores[1], 1))
 } else {
-  scoresContainer.insertAdjacentHTML(
-    "beforeend",
-    generateScoreCard(scores[0], scores.length, 0)
-  )
+  scoresContainer.insertAdjacentHTML("beforeend", generateScoreCard(scores[0], 0))
 }
 
 setInterval(() => {
@@ -46,7 +40,13 @@ setInterval(() => {
   const timeout = setTimeout(() => {
     scoresContainer.style.animation = ""
     scoresContainer.children[0].remove()
-    scoresContainer.insertAdjacentHTML("beforeend", generateScoreCard(scores[next], scores.length, next))
+    scoresContainer.insertAdjacentHTML("beforeend", generateScoreCard(scores[next], next))
     clearTimeout(timeout)
   }, 1500)
 }, 3000)
+
+setInterval(async () => {
+  const res = await fetch("/api/get-scores", {method: "POST"})
+  const data = await res.json()
+  scores = data.scores
+}, (60 * 60 * 1000))

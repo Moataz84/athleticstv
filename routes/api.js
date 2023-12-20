@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken")
 const fs = require("fs")
 const path = require("path")
 const Users = require("../Models/Users")
+const getScores = require("../utils/scores")
 const { checkOrigin } = require("../utils/middleware")
 
 router.post("/login", checkOrigin, async (req, res) => {
@@ -36,6 +37,11 @@ router.post("/change-password", checkOrigin, async (req, res) => {
   const password = await bcrypt.hash(req.body.newPassword, 10)
   await Users.findOneAndUpdate({_id: id}, {$set: {password}})
   res.send({msg: "success"})
+})
+
+router.post("/get-scores", async (req, res) => {
+  const scores = await getScores()
+  res.send({scores})
 })
 
 module.exports = router
