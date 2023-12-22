@@ -1,5 +1,8 @@
 const puppeteer = require("puppeteer")
 const fs = require("fs")
+const path = require("path")
+
+const filePath = path.join(__dirname, "./csvevents.csv")
 
 async function downloadFile() {
   const browser = await puppeteer.launch({headless: true})
@@ -15,17 +18,17 @@ async function downloadFile() {
   })
   
   return new Promise(resolve => {
-    fs.watchFile("./csvevents.csv", async () => {
-      await browser.close()
-      fs.unwatchFile("./csvevents.csv")
+    fs.watchFile(filePath, async () => {
       resolve()
+      await browser.close()
+      fs.unwatchFile(filePath)
     })
   })
 }
 
 async function getEvents() {
   await downloadFile()
-  const file = fs.readFileSync("./csvevents.csv", "utf-8")
+  const file = fs.readFileSync(filePath, "utf-8")
   const rows = file.split("\n").filter((row, i) => i > 0).map(string => string.split(","))
   const events = rows.map(row => ({eventName: row[0], start: row[1], end: row[2]})).filter(e => e.start)
   return events

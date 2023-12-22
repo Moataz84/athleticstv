@@ -1,3 +1,4 @@
 node_modules/
+utils/csvevents.csv
 .env
 test.js

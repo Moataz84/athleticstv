@@ -4,6 +4,7 @@ const fs = require("fs")
 const path = require("path")
 const Posts = require("../Models/Posts")
 const getScores = require("../utils/scores")
+const getEvents = require("../utils/events")
 const { validateJWT, checkLoggedIn } = require("../utils/middleware")
 
 router.get("/", validateJWT, (req, res) => {
@@ -15,8 +16,8 @@ router.get("/login", validateJWT, (req, res) => {
 })
 
 router.get("/view", validateJWT, async (req, res) => {
-  const scores = await getScores()
-  res.render("view", {scores: JSON.stringify(scores)})
+  const [scores, events] = await Promise.all([getScores(), getEvents()])
+  res.render("view", {scores: JSON.stringify(scores), events})
 })
 
 module.exports = router

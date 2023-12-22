@@ -10,7 +10,13 @@
   <div class="container" style="background-color: #fff;">
     <div class="layout">
       <div class="first"></div>
-      <div class="second"></div>
+      <div class="side-pannel">
+        <div class="events">
+          <% for (event of events) { %>
+            <p><%= event.eventName%></p>
+          <% } %>
+        </div>
+      </div>
       <div class="scores-container">
         <div class="scores" data-scores="<%= scores %>"></div>
       </div>
