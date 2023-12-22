@@ -51,6 +51,7 @@ async function getScores() {
   const scores = []
   const regex = /[\n\r]+|[\s]{2,}/g
   const date =  await getDate()
+  console.log(date)
   const sports = JSON.parse(fs.readFileSync(path.join(__dirname, "../sports.json"), "utf-8"))
 
   const formData = new FormData()
@@ -96,10 +97,12 @@ async function getScores() {
     const school2Img = `schools/${school2.children[0].children[0].src.replace("images/logos/", "")}`
     const score2 = scoreRow[2].textContent.replace(regex, " ").trim()
 
+    const d = new Date(new Date(date).getTime() + new Date().getTimezoneOffset() * 60000)
+
     scores.push({
       sportName,
       sportIcon,
-      date: new Date(date).toLocaleDateString("en-CA", {day: "numeric", month: "long", year: "numeric"}),
+      date: new Date(d).toLocaleDateString("en-CA", {day: "numeric", month: "long", year: "numeric"}),
       school1: {
         name: school1Name,
         img: school1Img,
