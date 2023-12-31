@@ -34,8 +34,8 @@ async function getDate() {
   const d = new Date()
   d.setHours(0, 0, 0, 0)
   d.toLocaleDateString("en-CA")
-  const yesterday = dates.filter(date => d.getTime() > date).splice(-1)[0]
-  const date = new Date(yesterday).toLocaleDateString("en-CA")
+  const mostRecent = dates.filter(date => d.getTime() > date).splice(-1)[0]
+  const date = new Date(mostRecent).toLocaleDateString("en-CA")
   return date
 }
 
@@ -51,7 +51,6 @@ async function getScores() {
   const scores = []
   const regex = /[\n\r]+|[\s]{2,}/g
   const date =  await getDate()
-  console.log(date)
   const sports = JSON.parse(fs.readFileSync(path.join(__dirname, "../sports.json"), "utf-8"))
 
   const formData = new FormData()
