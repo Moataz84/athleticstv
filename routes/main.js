@@ -17,7 +17,7 @@ router.get("/login", validateJWT, (req, res) => {
 
 router.get("/view", validateJWT, async (req, res) => {
   const [scores, events] = await Promise.all([getScores(), getEvents()])
-  res.render("view", {scores: JSON.stringify(scores), events: []})
+  res.render("view", {scores: JSON.stringify(scores), events})
 })
 
 module.exports = router
