@@ -10,8 +10,7 @@ const schema = new mongoose.Schema({
     type: Boolean,
     default: true
   }
-}, {timestamps: true})
-schema.index({createdAt: 1}, {expireAfterSeconds: 604800, partialFilterExpression: {expire: true}})
+})
 
 const Posts = mongoose.model("posts", schema)
 module.exports = Posts
