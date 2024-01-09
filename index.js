@@ -7,6 +7,7 @@ const uuid = require("uuid")
 const Posts = require("./Models/Posts")
 const imagekit = require("./utils/imagekit")
 const mainRoutes = require("./routes/main")
+const postsRoutes = require("./routes/posts")
 const apiRoutes = require("./routes/api")
 const { checkLoggedIn } = require("./utils/middleware")
 
@@ -29,10 +30,81 @@ app.use(express.json({limit: "100mb"}))
 app.use(express.static(path.join(__dirname, "/public")))
 
 app.use("/api", apiRoutes)
+app.use("/posts", postsRoutes)
 app.use("/", mainRoutes)
 
 io.on("connection", socket => {
+  socket.on("post-create", async data => {
+    const postId = uuid.v4().replace(/-/g, "")
+    const { photo, caption, expire } = data
 
+    const { pictureUrl, photoId } = await new Promise(resolve => {
+      imagekit.upload({
+        file: photo,
+        fileName: uuid.v4(),
+        folder: "athletics"
+      }, (e, result) => resolve({pictureUrl: result.url, photoId: result.versionInfo.id}))
+    })
+  
+    const req = {
+      cookies: {
+        "JWT-Token": socket.handshake.headers.cookie?.split(";")?.
+        find(cookie => cookie.includes("JWT-Token"))?.replace("JWT-Token=", "")?.replace(" ", "")
+      }
+    }
+    const loggedIn = checkLoggedIn(req)
+
+    const post = await new Posts({
+      postId,
+      photo: pictureUrl,
+      photoId,
+      caption,
+      approved: loggedIn,
+      expire,
+      createdAt: new Date().getTime()
+    }).save()
+
+    if (loggedIn) io.emit("post-created", post)
+    socket.emit("post-id", postId)
+  })
+
+  socket.on("post-approve", async postId => {
+    let [posts] = await Promise.all([Posts.find(), Posts.findOneAndUpdate({postId}, {$set: {approved: true}})])
+    posts = posts.map(post => {
+      if (post.postId === postId) post.approved = true
+      return post
+    }).filter(post => post.approved)
+    socket.emit("approved")
+    io.emit("post-approved", posts)
+  })
+
+  socket.on("post-update", async data => {
+    let { postId, photo, photoId, caption } = data
+
+    if (photo.startsWith("data:image")) {
+      imagekit.deleteFile(photoId)
+      const result = await new Promise(resolve => {
+        imagekit.upload({
+          file: photo,
+          fileName: uuid.v4(),
+          folder: "athletics"
+        }, (e, result) => resolve({photo: result.url, photoId: result.versionInfo.id}))
+      })
+      photo = result.photo
+      photoId = result.photoId
+    }
+    const post = await Posts.findOneAndUpdate({postId}, {$set: {caption, photo, photoId}}, {new: true})
+    io.emit("post-updated", post)
+  })
+
+  socket.on("post-delete", async postId => {
+    const post = await Posts.findOneAndDelete({postId})
+    imagekit.deleteFile(post.photoId)
+    socket.emit("deleted")
+    io.emit("post-deleted", postId)
+  })
 })
+
+app.use((req, res) => res.status(404).send("Not Found"))
 
 mongoose.connect(URI).then(() => server.listen(port, () => console.log(`http://localhost:${port}`)))

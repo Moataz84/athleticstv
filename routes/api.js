@@ -2,10 +2,7 @@ const express = require("express")
 const router = express.Router()
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
-const fs = require("fs")
-const path = require("path")
 const Users = require("../Models/Users")
-const getScores = require("../utils/scores")
 const { checkOrigin } = require("../utils/middleware")
 
 router.post("/login", checkOrigin, async (req, res) => {
@@ -39,9 +36,15 @@ router.post("/change-password", checkOrigin, async (req, res) => {
   res.send({msg: "success"})
 })
 
-router.post("/get-scores", async (req, res) => {
-  const scores = await getScores()
-  res.send({scores})
+router.post("/create-user", checkOrigin, async (req, res) => {
+  const { username, password } = req.body
+  const userCheck = await Users.findOne({username})
+  if (userCheck) {
+    return res.send({msg: "User already exists"})
+  }
+  const hashedPassword = await bcrypt.hash(password, 10)
+  await Users({username, password: hashedPassword}).save()
+  res.send({msg: "success"})
 })
 
 module.exports = router
