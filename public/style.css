@@ -264,6 +264,11 @@ nav a:last-of-type {
   100% { top: calc(-10vh); }
 }
 
+@keyframes move-slider {
+  0% { right: 0%; }
+  100% { right: 100%; }
+}
+
 /* Login */
 .content.auth {
   min-height: calc(100vh - 150px);

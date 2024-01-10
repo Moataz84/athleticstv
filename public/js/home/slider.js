@@ -25,7 +25,7 @@ setInterval(() => {
   const nextImage = posts[next] != undefined? posts[next].photo : posts[0].photo
   const nextCaption = posts[next - 1] != undefined? posts[next - 1].caption : posts[0].caption
 
-  slider.style.animation = "move 1.5s ease-in-out forwards"
+  slider.style.animation = "move-slider 1.5s ease-in-out forwards"
   const timeout = setTimeout(() => {
     document.querySelector(".ql-editor").innerHTML = nextCaption
     slider.style.animation = ""
