@@ -56,6 +56,9 @@ nav a:last-of-type {
 }
 
 .photo-slider {
+  max-height: calc(90vh - 15px);
+  display: flex;
+  flex-direction: column;
   position: relative;
   border-right: 5px solid #4284b3;
 }
@@ -119,7 +122,7 @@ nav a:last-of-type {
   right: 20px;
   border-radius: 10px;
   box-shadow: 0 0 13px 2px #4284b3;
-  color: #fff;
+  background-color: #fff;
   border: none !important;
 }
 
