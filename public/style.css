@@ -49,17 +49,146 @@ nav a:last-of-type {
   width: 100%;
   height: 100vh;
   display: grid;
-  gap: 15px;
+  row-gap: 15px;
   grid-template-columns: 77% auto;
   grid-template-rows: auto 10vh;
+  background-color: #fff;
 }
 
-.first {
-  background-color: black;
+.photo-slider {
+  position: relative;
+  border-right: 5px solid #4284b3;
+}
+
+.banner {
+  width: calc(100% - 100px);
+  height: calc(11vh - 20px);
+  padding: 10px 50px;
+  display: flex;
+  gap: 30px;
+  border-bottom: 5px solid #4284b3;
+}
+
+.banner img {
+  width: auto;
+  max-height: 100%;
+}
+
+.banner .greeting {
+  align-self: center;
+  font-size: 1.6vw;
+}
+
+.photo-slider {
+  border-bottom: 5px solid #4284b3;
+}
+
+.photo-slider .slider-container {
+  overflow: hidden;
+}
+
+.photo-slider .slider-container .slider {
+  width: 200%;
+  display: flex;
+  position: relative;
+}
+
+.photo-slider .slider-container .slide {
+  width: 100%;
+  height: calc(100vh - 11vh);
+  display: flex;
+  justify-content: center;
+}
+
+.photo-slider .slider-container .slide img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.caption-editor .ql-toolbar {
+  display: none;
+}
+
+.caption {
+  width: 45%;
+  height: 20%;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 13px 2px #4284b3;
+  color: #fff;
+  border: none !important;
+}
+
+.caption .ql-editor {
+  min-height: auto !important;
+  border: none !important;
+  overflow: hidden !important;
+}
+
+.caption .ql-editor h1 {
+  font-size: 2.5vw !important;
+}
+
+.caption .ql-editor h2 {
+  font-size: 1.9vw !important;
+}
+
+.caption .ql-editor p {
+  font-size: 1.25vw !important;
 }
 
 .side-pannel {
+  border-bottom: 5px solid #4284b3;
+}
 
+.side-pannel {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.side-pannel .date-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 30px 7% 20px;
+  color: #fff;
+}
+
+.side-pannel .date-bubble {
+  align-self: normal;
+  border-radius: 10px;
+  background-color: #4284b3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 7px;
+  box-shadow: 0 0 13px 2px #4284b3;
+}
+
+.side-pannel .date {
+  font-size: 1.25vw;
+}
+
+.side-pannel .date > span:first-of-type {
+  font-size: 1.75vw;
+  font-weight: 700;
+  margin-right: 7px;
+}
+
+.side-pannel .time {
+  font-size: 2.75vw;
+}
+
+.side-pannel .time > span:first-of-type  {
+  font-size: 3.5vw;
+  font-weight: 700;
+  margin-right: 10px;
 }
 
 .scores-container {

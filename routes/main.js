@@ -10,8 +10,12 @@ router.get("/", validateJWT, (req, res) => {
 })
 
 router.get("/view", validateJWT, async (req, res) => {
-  const [scores, events] = await Promise.all([getScores(), getEvents()])
-  res.render("view", {scores: JSON.stringify(scores), events})
+  const [posts, scores, events] = await Promise.all([
+    Posts.find({approved: true, $or: [{createdAt: {$gt: (new Date().getTime() - 604800000)}}, {expire: false}]}),
+    getScores(), 
+    getEvents()
+  ])
+  res.render("view", {scores: JSON.stringify(scores), posts: JSON.stringify(posts), events})
 })
 
 router.get("/login", validateJWT, (req, res) => {
